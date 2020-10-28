@@ -89,7 +89,7 @@ def get_cover_by_guide(epub):
     rootfile_root = minidom.parseString(rootfile.read())
     for ref in rootfile_root.getElementsByTagName("reference"):
         if ref.getAttribute("type") == "cover":
-            cover_href = ref.getAttribute("href")
+            cover_href = ref.getAttribute("href").split('#')[0]
             cover_file_path = os.path.join(os.path.dirname(rootfile_path), cover_href)
 
             # is html
@@ -101,6 +101,7 @@ def get_cover_by_guide(epub):
                 img_path = img.getAttribute("src")
                 return os.path.relpath(os.path.join(os.path.dirname(cover_file_path), img_path))
     return None
+
 def get_cover_by_filename(epub):
     no_matching_images = []
     for fileinfo in epub.filelist:
